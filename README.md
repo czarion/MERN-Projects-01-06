@@ -142,15 +142,6 @@ If two customers race for the last unit, only one transaction commits; the other
 
 ## 🧪 Tests
 
-```bash
-npm test          # API tests on an isolated MongoDB replica set
-npm run build     # production build of every page
-
-# with `npm run dev` running in another terminal:
-cd Lab-03-ShopKart-Product-Discovery/frontend
-npm run test:e2e  # Playwright browser journeys
-```
-
 - **6 API test groups** — wishlist/cart isolation, stock limits, mocked Razorpay verification and replay, input validation, unauthorized writes and origins, COD totals, duplicate checkout, and two buyers racing for the last unit.
 - **2 browser journeys** — sign-up to sign-out with wishlist, bag, address validation, COD and order history; plus sorting, empty results, theme persistence and mobile navigation.
 - **CI** runs setup, API tests, the build and both browser journeys on every push to `main`.
