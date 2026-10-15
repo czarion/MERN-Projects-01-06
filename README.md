@@ -346,7 +346,7 @@ npx vercel deploy --prod
 ---
 
 <p align="center">
-  Made by <a href="https://github.com/kartikeyajay2006"><b>Kartikeya Yadav</b></a> · 2nd-year MERN lab assignment · <a href="https://shopkart-black-one.vercel.app">Live demo</a>
+  Made by <a href="https://github.com/czarion"><b>Ishan Saini</b></a>
   <br />
   <sub>Photography: Unsplash · Fonts: DM Sans, Manrope, Playfair Display</sub>
 </p>
