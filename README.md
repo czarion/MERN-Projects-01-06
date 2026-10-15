@@ -4,7 +4,6 @@
 </picture>
 
 <p align="center">
-  <a href="https://github.com/kartikeyajay2006/2nd-Year-MERN-P_S/actions/workflows/ci.yml"><img src="https://github.com/kartikeyajay2006/2nd-Year-MERN-P_S/actions/workflows/ci.yml/badge.svg" alt="ShopKart checks" /></a>
   <img src="https://img.shields.io/badge/React-18-243e2e?style=flat-square&logo=react&logoColor=d9edac" alt="React 18" />
   <img src="https://img.shields.io/badge/Vite-6-243e2e?style=flat-square&logo=vite&logoColor=d9edac" alt="Vite 6" />
   <img src="https://img.shields.io/badge/Express-5-243e2e?style=flat-square&logo=express&logoColor=d9edac" alt="Express 5" />
@@ -12,68 +11,6 @@
   <img src="https://img.shields.io/badge/Node-20.19%2B-243e2e?style=flat-square&logo=nodedotjs&logoColor=d9edac" alt="Node 20.19+" />
   <img src="https://img.shields.io/badge/Playwright-e2e-243e2e?style=flat-square&logo=playwright&logoColor=d9edac" alt="Playwright end-to-end tests" />
 </p>
-
-<p align="center">
-  <a href="https://shopkart-black-one.vercel.app"><img src="https://img.shields.io/badge/Live%20demo-shopkart--black--one.vercel.app-d9edac?style=for-the-badge&logo=vercel&logoColor=243e2e&labelColor=243e2e" alt="Open the live ShopKart demo" /></a>
-</p>
-
-<p align="center">
-  <b>A complete MERN shopping assignment</b> — browse, save, bag and check out, with real orders and stock stored in MongoDB.
-  <br />
-  <b>Live:</b> <a href="https://shopkart-black-one.vercel.app">https://shopkart-black-one.vercel.app</a>
-  <br />
-  <a href="#-try-it-live">Live demo</a> ·
-  <a href="#-see-it-in-action">Demo</a> ·
-  <a href="#-run-it-in-two-commands">Quick start</a> ·
-  <a href="#-a-tour-of-the-store">Screens</a> ·
-  <a href="#-what-works">Features</a> ·
-  <a href="#-how-it-works">Architecture</a> ·
-  <a href="#-tests">Tests</a>
-</p>
-
-## 🌐 Try it live
-
-**👉 [shopkart-black-one.vercel.app](https://shopkart-black-one.vercel.app)**
-
-Create an account, browse the 41-product collection, save favourites, fill your bag and place a **cash-on-delivery** order — it is stored in a real MongoDB Atlas database and appears under *My orders*.
-
-| | |
-| --- | --- |
-| **Hosting** | Vercel — React build on the CDN, Express API as a serverless function at `/api` |
-| **Region** | Mumbai (`bom1`) for both the API and the database |
-| **Database** | MongoDB Atlas (free cluster, replica set, so checkout transactions work) |
-| **Payments** | Cash on delivery works fully. Razorpay Test Mode is not configured on the live site and shows a clear message if chosen |
-
-<sub>The first request after the site has been idle can take a second or two while the serverless API starts.</sub>
-
-## 🎬 See it in action
-
-<p align="center">
-  <img src="docs/assets/demo.gif" alt="Recorded journey: open the collection, filter Electronics, search headphones, save to wishlist, add to bag, raise quantity, fill the address and place a cash-on-delivery order" width="840" />
-</p>
-<p align="center"><sub>A real recording of the running app: collection → search → wishlist → bag → checkout → order confirmed.</sub></p>
-
-## 🚀 Run it in two commands
-
-You need **Node.js 20.19+** (22 recommended) and internet access for the first install. From the repository root:
-
-```bash
-npm run setup   # installs API + web dependencies
-npm run dev     # starts MongoDB, seeds the catalog, launches API and web app
-```
-
-Open **http://localhost:5173** and create an account. No API keys, no demo password, no manual MongoDB install.
-
-| Service             | Address                    | Notes                                                    |
-| ------------------- | -------------------------- | -------------------------------------------------------- |
-| 🛍️ Storefront (Vite) | http://localhost:5173      | React app                                                |
-| ⚙️ API (Express)     | http://localhost:3000      | `GET /health` reports database readiness                 |
-| 🍃 MongoDB          | 127.0.0.1:27018            | Local replica set, data kept in ignored `.local-data/`   |
-
-The runner seeds **41 products** and keeps accounts, carts, wishlists, orders and stock across restarts — re-seeding only adds missing products and never resets purchased stock. The first run downloads a MongoDB binary (~123 MB). Stop everything with **Ctrl+C**.
-
-> [!NOTE]
-> **Cash on delivery** completes the whole journey with no credentials. **Razorpay Test Mode** is an optional extra that needs your own test keys. This is an academic store: an order is recorded, but no real courier is booked.
 
 ## 🖼️ A tour of the store
 
