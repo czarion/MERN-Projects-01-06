@@ -1,0 +1,31 @@
+html[data-theme="dark"] {
+  --bg: #171b16;
+  --surface: #20261e;
+  --soft: #293025;
+  --ink: #edf2e5;
+  --muted: #aab69e;
+  --line: #374030;
+  --accent: #d9edac;
+  --accent-ink: #24362b;
+  --lime: #a6c278;
+  --warm: #d4b286;
+  --danger: #f4a397;
+  color-scheme: dark;
+}
+html[data-theme="dark"] .announcement {
+  background: #10140e;
+  color: #e5edd9;
+}
+html[data-theme="dark"] .hero-visual > img {
+  filter: brightness(0.88);
+}
+html[data-theme="dark"] .editorial-art {
+  color: #d9edac;
+}
+html[data-theme="dark"] .wish-button:not(.icon-button).is-saved {
+  color: #f4a397;
+}
+html[data-theme="dark"] .status-pill.pending {
+  background: #483c26;
+  color: #e6c98f;
+}
