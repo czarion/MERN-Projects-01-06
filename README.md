@@ -140,94 +140,6 @@ If two customers race for the last unit, only one transaction commits; the other
 | Database | MongoDB replica set (local via `mongodb-memory-server`, or Atlas) |
 | Testing | `node:test`, Supertest, nock, Playwright, GitHub Actions |
 
-## 🗂️ Project structure
-
-The runnable app lives in **`Lab-03-ShopKart-Product-Discovery/`**. Labs 04–06 document the wishlist, cart and checkout work added to that same app; Labs 01–02 are the earlier standalone exercises.
-
-```text
-2nd-Year-MERN-P_S/
-├── api/index.js                       # Vercel serverless entry for the Express API
-├── vercel.json                        # Vercel build, region and /api routing
-├── scripts/dev.cjs                    # one command: MongoDB + seed + API + web
-├── Lab-01-ShopKart-Auth/              # earlier auth exercise
-├── Lab-02-ShopKart-Client/            # earlier React client exercise
-├── Lab-03-ShopKart-Product-Discovery/ # ★ the final app
-│   ├── backend/
-│   │   ├── controllers/ models/ routes/ middlewares/
-│   │   ├── utils/order.js             # order snapshots + transaction helpers
-│   │   ├── seed.js                    # 41 products, keeps existing stock
-│   │   └── test/shop-flow.test.js     # API tests on a real replica set
-│   └── frontend/
-│       ├── src/components/ context/ pages/ services/
-│       ├── public/images/             # bundled photos + fallback
-│       └── tests/storefront.spec.js   # browser journeys
-├── Lab-04-ShopKart-Wishlist/
-├── Lab-05-ShopKart-Shopping-Cart/
-├── Lab-06-ShopKart-Checkout-Orders/
-└── docs/
-    ├── PROJECT_REVIEW.md              # findings, fixes and known limits
-    └── assets/                        # README banner, demo and screenshots
-```
-
-## 🔌 API routes
-
-<details>
-<summary>Show all routes</summary>
-
-| Method | Route | Access · purpose |
-| --- | --- | --- |
-| `POST` | `/customers/register` | Public · create account |
-| `POST` | `/customers/login` | Public · set session cookie |
-| `GET` | `/customers/me` | Customer profile |
-| `POST` | `/customers/logout` | Clear cookie |
-| `GET` | `/products?search=&category=` | Public catalog |
-| `GET` | `/products/:id` | Public product details |
-| `GET` `POST` `DELETE` | `/wishlist`, `/wishlist/:productId` | Saved products |
-| `GET` `POST` `PATCH` `DELETE` | `/cart`, `/cart/:productId` | Cart and quantities |
-| `POST` | `/orders/cash-on-delivery` | Transactional COD order |
-| `POST` | `/orders/create-payment-order` | Razorpay test order |
-| `POST` | `/orders/verify-payment` | Signature check + transactional placement |
-| `GET` | `/orders`, `/orders/:id` | Your own orders |
-| `GET` | `/health` | API and database readiness |
-
-Wishlist, cart and order routes take the customer from the session, never from the request body. There is no public endpoint for writing products — the seed script manages the catalog.
-</details>
-
-## ⚙️ Use your own MongoDB or Razorpay keys
-
-<details>
-<summary>Run the API and web app separately (Atlas or your own replica set)</summary>
-
-```bash
-cd Lab-03-ShopKart-Product-Discovery/backend
-cp .env.example .env      # set MONGO_URI, JWT_SECRET, CLIENT_URL
-npm ci && npm run seed && npm start
-```
-
-In a second terminal:
-
-```bash
-cd Lab-03-ShopKart-Product-Discovery/frontend
-npm ci && npm run dev -- --host 127.0.0.1
-```
-
-`MONGO_URI` must point to a **replica set** (or Atlas) because orders use transactions. A standalone server can serve the catalog but cannot complete checkout.
-
-| Variable | Purpose |
-| --- | --- |
-| `PORT` | API port, default `3000` |
-| `MONGO_URI` | MongoDB connection string |
-| `JWT_SECRET` | Long random secret for signing sessions |
-| `CLIENT_URL` | Exact frontend origin allowed by CORS and origin checks |
-| `RAZORPAY_KEY_ID` | Optional test key (`rzp_test_...`) |
-| `RAZORPAY_KEY_SECRET` | Optional, server-only test secret |
-| `NODE_ENV` | `production` enables Secure cookies and stricter rate limits |
-
-The frontend reads **`VITE_API_URL`** if the API is elsewhere; keep both on the same site so the Strict session cookie works. Never put the JWT or Razorpay secret in a `VITE_` variable.
-
-To try Razorpay with `npm run dev`, copy the backend `.env.example` to `.env` and add your test keys — the runner supplies the database URL and session secret itself.
-</details>
-
 ## 🧪 Tests
 
 ```bash
@@ -245,33 +157,6 @@ npm run test:e2e  # Playwright browser journeys
 
 The browser tests use installed Google Chrome. Without it, run `npx playwright install chromium` and then `E2E_CHROME_CHANNEL=chromium npm run test:e2e`. Razorpay responses are mocked in tests; a live Test Mode payment needs your own keys and is not claimed as verified.
 
-## ☁️ Deployment
-
-The live site runs on **Vercel** as a single project, so the storefront and the API share one domain and the Strict session cookie keeps working.
-
-```mermaid
-flowchart LR
-    B["🌍 Browser"] --> V["▲ Vercel · shopkart-black-one.vercel.app"]
-    V -->|"/, /products, /cart …"| S["React build (static, SPA fallback)"]
-    V -->|"/api/*"| F["λ api/index.js → Express app (bom1)"]
-    F --> A[("🍃 MongoDB Atlas · Mumbai")]
-```
-
-- **`vercel.json`** installs both apps, builds the React app with `VITE_API_URL=/api`, routes `/api/*` to the function and every other path to `index.html`.
-- **`api/index.js`** reuses one MongoDB connection per instance and hands each request to the same Express app used locally.
-- **Build-time seeding:** each deploy runs `seed.js`, which only inserts missing products and never resets stock or user data.
-- **Environment variables** (set in the Vercel project, never committed): `MONGODB_URI` from the MongoDB Atlas integration and a random `JWT_SECRET`. Razorpay test keys are optional.
-
-<details>
-<summary>Deploy your own copy</summary>
-
-```bash
-npx vercel link                                   # create or link a Vercel project
-npx vercel integration add mongodbatlas -m clusterTier=FREE
-openssl rand -hex 48 | npx vercel env add JWT_SECRET production --sensitive
-npx vercel deploy --prod
-```
-</details>
 
 ## 🔐 Security and limits
 
